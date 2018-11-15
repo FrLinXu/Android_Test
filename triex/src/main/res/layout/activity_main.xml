@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户登录"
+            android:layout_gravity="center"
+            android:textSize="25dp"
+            />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10sp"
+            >
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="登录"
+                android:textSize="20sp"
+                android:layout_marginLeft="60sp"
+                />
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_bg"
+                android:singleLine="true"
+                android:textSize="20sp"
+                android:layout_marginRight="60sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10sp"
+            >
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码"
+                android:textSize="20sp"
+                android:layout_marginLeft="60sp"
+                />
+            <EditText
+                android:id="@+id/passwd"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_bg"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textSize="20sp"
+                android:layout_marginRight="60sp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:text="登录"
+                android:id="@+id/login"
+                />
+            <Button
+                android:layout_margin="10dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:id="@+id/cancel"
+                />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/che1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="记住用户名和密码"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="显示登录信息"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
