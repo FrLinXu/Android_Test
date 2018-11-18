@@ -28,12 +28,16 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar mSeekbarAudio;
     private boolean mUserIsSeeking;
     private TextView time ;
+    private int nowp = 0;
+    private int songs ;
     private String[] MusicName = {
-            "两只老虎", "无赖"
+            "两只老虎", "无赖-郑中基","吉克隽逸 - 即刻出发","毛华锋 - 奇迹再现"
     };
     private int[] Musicpath = {
            R.raw.tiger,
-            R.raw.wulai
+            R.raw.wulai,
+            R.raw.jikechufa,
+            R.raw.qijizaixian
     };
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -82,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer.stop();
                     mediaPlayer = MediaPlayer.create(MainActivity.this , R.raw .tiger) ;
                     mediaPlayer = new MediaPlayer();
-                    Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" +R.raw.tiger);
+                    nowp =nowp -1 >-1 ? nowp-1 : songs-nowp-1;
+                    Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" +Musicpath[ nowp % songs ]);
                    try
                    {
                        mediaPlayer.setDataSource(MainActivity.this,uri);
@@ -95,6 +100,25 @@ public class MainActivity extends AppCompatActivity {
                 }
                     break;
                 case  R.id.btn_next:
+                    if( mediaPlayer != null)
+                    {
+                        if (mediaPlayer.isPlaying())
+                            mediaPlayer.stop();
+                        mediaPlayer = MediaPlayer.create(MainActivity.this , R.raw .tiger) ;
+                        mediaPlayer = new MediaPlayer();
+                        nowp =nowp +1 <songs ? nowp+1 : nowp+1-songs;
+                        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" +Musicpath[ nowp % songs ]);
+                        try
+                        {
+                            mediaPlayer.setDataSource(MainActivity.this,uri);
+
+                            mediaPlayer.prepareAsync();
+                        }
+                        catch (IOException e )
+                        {e.printStackTrace();}
+                        mediaPlayer.start();
+                    }
+
                     break;
             }
 
@@ -114,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         currentmusic=0;
+        nowp=1;
+        songs=MusicName.length;
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(this, R.raw.tiger);
 
@@ -148,6 +174,9 @@ public class MainActivity extends AppCompatActivity {
         Handler handler= new Handler() ;
         updateProcess update = new updateProcess(time,mediaPlayer,mSeekbarAudio);
         update.start();
+        ListView listView = (ListView) findViewById(R.id.musiclist) ;
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_activated_1,MusicName);
+        listView.setAdapter(adapter);
       /*  MusicAdater adapter = new MusicAdater(MainActivity.this,MusicName);
         ListView listView = (ListView) findViewById(R.id.musiclist) ;
         listView.setAdapter(adapter);

@@ -50,25 +50,25 @@
                 android:id="@+id/btn_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="start" />
+                android:text="开始" />
 
             <Button
                 android:id="@+id/btn_pause"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="pause" />
+                android:text="暂停" />
 
             <Button
                 android:id="@+id/btn_resume"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="resume" />
+                android:text="继续播放" />
 
             <Button
                 android:id="@+id/btn_stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="stop" />
+                android:text="停止播放" />
 
         </LinearLayout>
         <LinearLayout
