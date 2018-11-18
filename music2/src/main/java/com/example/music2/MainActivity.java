@@ -2,20 +2,39 @@ package com.example.music2;
 
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Handler;
+import android.preference.PreferenceActivity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.io.IOException;
 
+
 public class MainActivity extends AppCompatActivity {
 
+    int currentmusic ;
     private MediaPlayer mediaPlayer;
     private SeekBar mSeekbarAudio;
     private boolean mUserIsSeeking;
-
+    private TextView time ;
+    private String[] MusicName = {
+            "两只老虎", "无赖"
+    };
+    private int[] Musicpath = {
+           R.raw.tiger,
+            R.raw.wulai
+    };
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -56,7 +75,29 @@ public class MainActivity extends AppCompatActivity {
                         mediaPlayer.start();
                     }
                     break;
+                case R.id.btn_last:
+                    if( mediaPlayer != null)
+                {
+                    if (mediaPlayer.isPlaying())
+                    mediaPlayer.stop();
+                    mediaPlayer = MediaPlayer.create(MainActivity.this , R.raw .tiger) ;
+                    mediaPlayer = new MediaPlayer();
+                    Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" +R.raw.tiger);
+                   try
+                   {
+                       mediaPlayer.setDataSource(MainActivity.this,uri);
+
+                       mediaPlayer.prepareAsync();
+                   }
+                   catch (IOException e )
+                   {e.printStackTrace();}
+                    mediaPlayer.start();
+                }
+                    break;
+                case  R.id.btn_next:
+                    break;
             }
+
 
         }
     };
@@ -72,13 +113,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        currentmusic=0;
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(this, R.raw.tiger);
 
             mediaPlayer = new MediaPlayer();
 
-            Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" +R.raw.tiger);
+            Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" +R.raw.wulai);
             try {
                 mediaPlayer.setDataSource(this, uri);
                 mediaPlayer.setOnPreparedListener(onPreparedListener);
@@ -93,13 +134,24 @@ public class MainActivity extends AppCompatActivity {
         Button btnStop = (Button) findViewById(R.id.btn_stop);
         Button btnResume = (Button) findViewById(R.id.btn_resume);
         Button btnPause = (Button) findViewById(R.id.btn_pause);
-
+        Button last = (Button) findViewById(R.id.btn_last) ;
+        Button next = (Button) findViewById(R.id.btn_next) ;
+        last.setOnClickListener(onClickListener);
+        next.setOnClickListener(onClickListener);
         btnStart.setOnClickListener(onClickListener);
         btnStop.setOnClickListener(onClickListener);
         btnResume.setOnClickListener(onClickListener);
         btnPause.setOnClickListener(onClickListener);
 
+        time = (TextView) findViewById(R.id.time) ;
         initializeSeekbar();
+        Handler handler= new Handler() ;
+        updateProcess update = new updateProcess(time,mediaPlayer,mSeekbarAudio);
+        update.start();
+      /*  MusicAdater adapter = new MusicAdater(MainActivity.this,MusicName);
+        ListView listView = (ListView) findViewById(R.id.musiclist) ;
+        listView.setAdapter(adapter);
+        */
     }
 
     @Override
@@ -129,6 +181,13 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+
+
+                        int timems =mediaPlayer.getCurrentPosition() ;
+                        timems/=1000;
+                        if (time!=null)
+                        time.setText(timems/60+":"+ ( (timems%60>9 )?timems%60 : "0"+timems%60 )  );
                         if (fromUser) {
                             userSelectedPosition = progress;
                         }
@@ -143,5 +202,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
     }
+
+
 }
