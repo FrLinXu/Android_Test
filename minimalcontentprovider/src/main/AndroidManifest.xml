@@ -16,6 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SecondActivity" ></activity>
+        <provider
+            android:authorities="com.example.minimalcontentprovider.WordsProvider"
+            android:name=".WordsProvider"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
+
 
 </manifest>
